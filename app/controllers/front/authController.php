@@ -32,10 +32,8 @@ class authcontroller extends View{
             $data = Security::sanitizeInput($data);
             $data['password'] = Security::hashPassword($data['password']);
     
-            // Check if there are existing users
             $isFirstUser = User::count() === 0;
     
-            // Assign role based on whether this is the first user
             $data['role'] = $isFirstUser ? 'admin' : 'client';
     
             if (User::where('email', $data['email'])->exists()) {
@@ -52,7 +50,7 @@ class authcontroller extends View{
 
             if ($role === 'admin') {
                 Session::set('is_admin', true);
-                header('Location: /home');
+                
             } else {
                 header('Location: /home');
             }
